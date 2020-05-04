@@ -21,5 +21,7 @@ namespace rpg
         public static List<Ability> Resistance = new List<Ability>();
         public static List<string> BattlecryPhrases = new List<string>();
         public static List<string> DeathrattlePhrases = new List<string>();
+        public static List<string> Dodge = new List<string>();
+        public static List<Ability> YarikAbility = new List<Ability>();
     }
 }

@@ -17,9 +17,9 @@ namespace rpg
             {
                 Random random2 = new Random();
                 int DropChoise = random2.Next(0, Lists.items.Count); /*Выбор Шмотки из пула*/
-                player.Inventory.Add(Lists.items[DropChoise - 1]); /*Добавление шмотки в Инвентарь*/
-                Console.WriteLine($"{enemy.name} оставил после себя {Lists.items[DropChoise - 1].Name}!");
-                Lists.items.Remove(Lists.items[DropChoise - 1]);
+                player.Inventory.Add(Lists.items[DropChoise]); /*Добавление шмотки в Инвентарь*/
+                Console.WriteLine($"{enemy.name} оставил после себя {Lists.items[DropChoise].Name}!");
+                Lists.items.Remove(Lists.items[DropChoise]);
                 Console.WriteLine($"Твой инвентарь: ");
                 foreach (var predmet in player.Inventory)
                 {

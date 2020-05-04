@@ -37,6 +37,10 @@ namespace rpg
             this.Name = Name;
             this.Resistance = Resistance;
         }
+        public Ability(string Name)
+        {
+            this.Name = Name;
+        }
     }
     
 }

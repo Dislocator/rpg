@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Speech.Synthesis;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32.SafeHandles;
 using NAudio;
 using NAudio.Wave;  
 namespace rpg
@@ -19,7 +20,7 @@ namespace rpg
         string dialogechoise;
         string locationchoise;
         Music music = new Music();
-        public void Gutter1(Player player, Battle battle, int easteregg, List<Nps> nps, Misc misc, List<Ability> abilities)
+        public void Gutter1(Player player, Battle battle, int easteregg, List<Nps> nps, Misc misc)
         {
             synth.SetOutputToDefaultAudioDevice();
             var LocationBug = false;
@@ -29,13 +30,14 @@ namespace rpg
                     "Я на помойке. " +
                     "\nМне не очень хотелось оставаться здесь. Нужно поскорее выбираться и идти домой, переодеться. \n" +
                     "Хотя с другой стороны возможно стоит порыскать здесь в поисках сменных вещей\n");
-                
+            Console.ReadKey();
 
                 Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("1. Уйти из помойки\n");
                 if(Gutter1_2Var == true)
                 Console.WriteLine("2. Осмотреться");
-                
+            Console.ResetColor();
                 locationchoise = Console.ReadLine();
                 
                 switch (locationchoise)
@@ -49,22 +51,24 @@ namespace rpg
                             "Где-то вдали был слышен машинный гул и возмущённые голоса. \n" +
                             "Возможно мне стоит попросить у них сменную одежду? \n" +
                             "Но за кого меня примут... весь в грязи и ещё голова расскалываеться. \n");
-                            
+                    Console.ReadKey();
                         if (Gutter1_1Var)
                         {
                             Console.WriteLine("Краем глаза я заметил кучу рваных вещей лежавших неподалёку. \n" +
                             "Хоть не известно какой бомж носил их до этого. \n" +
-                            "Гораздо безопаснее будет переодеться в них");
-                            Console.WriteLine("1. Надеть разорванные вещи\n" +
-                                "2. Попросить вещи у рабочих");
+                            "Гораздо безопаснее будет переодеться в них\n");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("1. Надеть разорванные вещи\n\n" +
+                                "2. Попросить вещи у рабочих\n");
+                        Console.ResetColor();
                             locationchoise = Console.ReadLine();
                             switch(locationchoise)
                             {
                                 case "1":
-                                    Gutter1_1(player, battle, easteregg, nps, Lists.enemies, misc, Enemy.Resistance);
+                                    Gutter1_1(player, battle, easteregg, nps, Lists.enemies, misc);
                                     break;
                                 case "2":
-                                    Gutter1_2(player, battle, easteregg, nps, Lists.enemies, misc, Enemy.Resistance);
+                                    Gutter1_2(player, battle, easteregg, nps, Lists.enemies, misc);
                                     
                                     break;
                                 default:
@@ -79,7 +83,7 @@ namespace rpg
                         }
                         else
                         {
-                            Gutter1_2(player, battle, easteregg, nps, Lists.enemies, misc, Enemy.Resistance);
+                            Gutter1_2(player, battle, easteregg, nps, Lists.enemies, misc);
                         }
                         
                         
@@ -87,7 +91,7 @@ namespace rpg
                     default:
                         if (Gutter1_1Var)
                         {
-                            Gutter1_1(player, battle, easteregg, nps, Lists.enemies, misc, Enemy.Resistance);
+                            Gutter1_1(player, battle, easteregg, nps, Lists.enemies, misc);
                         }
                         else Console.WriteLine("Всё! Хватит! Ты проиграл!");
                         misc.GameOver();
@@ -95,7 +99,7 @@ namespace rpg
                 }
            
         }
-        public void Gutter1_1(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc, List<Ability> abilities)
+        public void Gutter1_1(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc)
         {
             location = "gutter1.1";
             if (player.name == "Login")
@@ -104,41 +108,46 @@ namespace rpg
                     $"Найдено пасхалок: {++easteregg} \n" +
                     $"Ты остался стоять в нерешительности, \n" +
                     "краем глаза я заметил груду вещей лежащих в углу. \n" +
-                    "Возможно стоит напялить их раз уж домой я не спешу?");
+                    "Возможно стоит напялить их раз уж домой я не спешу\n\n\n");
+                Console.ReadKey();
             }
             else Console.WriteLine($"Хватит ломать мой код! \n" +
                     $"Ты остался стоять в нерешительности, \n" +
                     "краем глаза я заметил груду вещей лежащих в углу. \n" +
-                    "Возможно стоит напялить их раз уж домой я не спешу?");
+                    "Возможно стоит напялить их раз уж домой я не спешу\n\n\n");
+            Console.ReadKey();
             Console.WriteLine("Подойдя поближе к вещам, разбросанным по земле, я заметил, как зашевелился правый карман пыльных брюк.. \n" +
                             "Оттолкнув их немного назад, \n" +
                             "я увидел огромную злобную уставшую крысу с маленькими глазами, \n" +
                             "явно не желающую покидать свое убежище. \n" +
-                            "Ну, мне придется набить ее крысиный хвост.");
+                            "Ну, мне придется набить ее крысиный хвост.\n\n\n");
+            Console.ReadKey();
             battle.BattleStart(enemies[0], player, misc);
             Gutter1_1Var = false;
             player.clothes.Clear();
             player.clothes.Add(Lists.clothes[1]);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"На тебе надето: {player.clothes[0].Name}");
             Console.WriteLine("Надрав жопу крысе и одев новопреобретённые панталоны в кармене я обнаружил ржавый старый ключ");
             player.Inventory.Add(Lists.questItems[0]);
-            Console.WriteLine($"Получено {Lists.questItems[0].Name}");
+            Console.WriteLine($"Получено {Lists.questItems[0].Name}\n\n\n");
+            Console.ResetColor();
             Console.ReadKey();
-            Gutter1(player, battle, easteregg, nps, misc, Enemy.Resistance);
+            Gutter1(player, battle, easteregg, nps, misc);
         }
-        public void Gutter1_2(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc, List<Ability> abilities)
+        public void Gutter1_2(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc)
         {
             Console.WriteLine("Погода была ясная. Сегодня я собирался пойти поиграть в контру с друзьями. \n" +
                 "А что в замен? Весь мокрый, в каких-то чертях.\n" +
                 "Ведь говорил мне вчера Ярик не мешать водку с пивом.\n" +
                 "А я ему Ёрш, Ёрш...\n" +
-                "Точно! Ярик! Он должен помнить что было вчера. Нужно позвонить ему, уверен он пил меньше меня, возможно он проясит ситуацию.\n");
+                "Точно! Ярик! Он должен помнить что было вчера. Нужно позвонить ему, уверен он пил меньше меня, возможно он проясит ситуацию.\n\n\n");
             Console.ReadKey();
             Console.WriteLine("Погрязнув в своих мыслях я не заметил как дошёл до источника звука\n" +
                 "Источником выступала бригада рабочих мешающих бетон.");
             Console.WriteLine("Из радио стоящего рядом доносилась пронзательна мелодия");
             music.StartMusic("Music/beton.mp3");
-            Console.WriteLine("Заприметив мои неудачные попытки дать о себе знать один из рабочих выключил радио и подошёл поближе");
+            Console.WriteLine("Заприметив мои неудачные попытки дать о себе знать один из рабочих выключил радио и подошёл поближе\n\n\n");
             Console.ReadKey();
             music.StopMusic();
             var waveStop = new WaveOutEvent();
@@ -149,24 +158,25 @@ namespace rpg
                 bool CycleVar = true;
                 while (CycleVar)
                 {
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine($"{nps[0].name}: Эй ты бомжара, а ну пшёл отсюда нах!");
                     Console.WriteLine("1. Следи за языком, работящий. ");
                     Console.WriteLine("2. Я не бомжара. Ничерта не помню, что вчера было");
-                    Console.WriteLine("3. А может ты пидор?");
-
+                    Console.WriteLine("3. А может ты пидор?\n\n");
+                    Console.ResetColor();
                     dialogechoise = Console.ReadLine();
                     switch (dialogechoise)
                     {
                         case "1":
                             CycleVar = false;
                             Console.WriteLine($"{nps[0].name}: А я смотрю ты не промах, себя в обиду не дашь." +
-                                $"\nЛадно, какого чёрта ты тут забыл?");
-                            Gutter1_3(player, battle, easteregg, nps, enemies, misc, Enemy.Resistance);
+                                $"\nЛадно, какого чёрта ты тут забыл?\n\n");
+                            Gutter1_3(player, battle, easteregg, nps, enemies, misc);
                             break;
                         case "2":
-                            Console.WriteLine($"{nps[0].name}: Вот и вали домой, проспись, нечего тебе здесь шляться!");
+                            Console.WriteLine($"{nps[0].name}: Вот и вали домой, проспись, нечего тебе здесь шляться!\n\n");
                             CycleVar = false;
-                            Gutter1_3(player, battle, easteregg, nps, enemies, misc, Enemy.Resistance);
+                            Gutter1_3(player, battle, easteregg, nps, enemies, misc);
                             break;
                         case "3":
                             CycleVar = false;
@@ -189,14 +199,15 @@ namespace rpg
             }
             else
             {
-                Console.WriteLine($"{nps[0].name}: Парень, ты заблудился. Здесь не парк развлечений!\n" +
+                Console.WriteLine($"{nps[0].name}: Парень, ты заблудился. Здесь не парк развлечений!\n\n" +
                     $"Чего тебе здесь надо!?");
-                Gutter1_3(player, battle, easteregg, nps, enemies, misc, Enemy.Resistance);
+                Console.ReadKey();
+                Gutter1_3(player, battle, easteregg, nps, enemies, misc);
             }
             
             
         }
-        public void Gutter1_3(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc, List<Ability> abilities)
+        public void Gutter1_3(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc)
         {
             bool checkInventory = false;
 
@@ -214,14 +225,20 @@ namespace rpg
                 {
                     if (checkInventory)
                     {
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine($"к. Спросить о ржавом ключе ");
+                        Console.ResetColor();
                     }
                     if (Gutter1_1Var)
                     {
+                        Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("s. Мужики, мне бы шмотки поменять, пьяный был, упал в лужу");
+                        Console.ResetColor();
                     }
+                    Console.ForegroundColor = ConsoleColor.Blue;
                     Console.WriteLine("c. Спросить о мужите с бородой");
-                    Console.WriteLine("e. Попросить поесть");
+                    Console.WriteLine("e. Попросить поесть\n\n");
+                    Console.ResetColor();
                     if (DedMaksim >= 1)
                     {
                     Console.WriteLine();
@@ -237,11 +254,19 @@ namespace rpg
                                                                 $"Где ты его нашёл?\n" +
                                                                 $"На куче обоссанных шмоток?\n" +
                                                                 $"Ладно, не важно, давай его сюда!\n" +
-                                                                $"Взамен получишь комплект чистых вещей" + $"");
+                                                                $"Взамен получишь комплект чистых вещей" + $"\n\n");
+                                Console.ReadKey();
                                 Console.WriteLine("Начальник смены сдержал своё слово и выдал мне сухой комбенезон");
+                                player.Inventory.Remove(Lists.questItems[0]);
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine($"Потеряно {Lists.questItems[0].Name}");
+                                Console.ResetColor();
                                 player.clothes.Clear();
                                 player.clothes.Add(Lists.clothes[2]);
+                                Console.ForegroundColor = ConsoleColor.Cyan;
                                 Console.WriteLine($"На тебе надето: {player.clothes[0].Name}");
+                                Console.ResetColor();
+                                Console.ReadKey();
                                 //Конец помойки----------------------------------------------
                                 SycleVar2 = false;
                             }
@@ -257,9 +282,11 @@ namespace rpg
                             Console.WriteLine($"{ nps[0].name}: "+
                                 "ты о Деде-Максиме? \n" +
                                 "Он тут завсегдай! \n" +
-                                "Главное не выбрасывай никогда бутылки при нём.\n" + "");
+                                "Главное не выбрасывай никогда бутылки при нём.\n\n\n" + "");
+                            Console.ForegroundColor = ConsoleColor.Blue;
                             Console.WriteLine("1. Забудем...\n");
                             Console.WriteLine("2. Так может ему пезды дать, этому вашему Максиму?\n");
+                            Console.ResetColor();
                             dialogechoise = Console.ReadLine();
                             switch (dialogechoise)
                             {
@@ -276,21 +303,24 @@ namespace rpg
                                         "Слушай. Максим живет в лочуге на краю помойки. \n" +
                                         "Если хочешь дать ему пизды - запомни: после Въетнама у него испортились Лёгкие. \n" +
                                         "Любой сильный запах крайне полезненнен для него\n" +
-                                        "Надеюсь мой совет тебе поможет.");
+                                        "Надеюсь мой совет тебе поможет.\n\n");
+                                    Console.ReadKey();
                                     break;
                                 default:
                                     break;
                             }
                             break;
                         case "e":
-                            Console.WriteLine($"{ nps[0].name}: Есть только просроченное молоко");
+                            Console.WriteLine($"{ nps[0].name}: Есть только просроченное молоко\n\n");
                             if (DedMaksim >= 1)
                             {
                                 bool SycleVar228 = true;
                                 while(SycleVar228)
                                 {
-                                    Console.WriteLine("1. Настоять\n" +
-                                                      "2. Назад");
+                                    Console.ForegroundColor = ConsoleColor.Blue;
+                                    Console.WriteLine("1. Настоять\n\n" +
+                                                      "2. Назад\n\n");
+                                    Console.ResetColor();
                                     dialogechoise = Console.ReadLine();
                                     switch (dialogechoise)
                                     {
@@ -299,8 +329,11 @@ namespace rpg
                                             DedMaksim++;
                                             Console.WriteLine("Выпив молока я почувствовал жуткое бурление в животе, а возможно ещё и силу земли!");
                                             player.abilities.Add(Lists.allAbilities[3]);
+                                            Console.ForegroundColor = ConsoleColor.Cyan;
                                             Console.WriteLine($"Получено умение {Lists.allAbilities[3].Name}");
-                                            Gutter1_Maksim(player, battle, easteregg, nps, enemies, misc, Enemy.Resistance);
+                                            Console.ResetColor();
+                                            Console.Read();
+                                            Gutter1_Maksim(player, battle, easteregg, nps, enemies, misc);
                                             SycleVar228 = false;
                                             SycleVar2 = false;
                                             
@@ -327,9 +360,12 @@ namespace rpg
             Console.WriteLine($"{ nps[0].name}: Хех. Что-бы не всё так просто. Придётся тебе их отработать! \n" +
     $"Видишь мужики по пояс в глине стоят? \n" +
     $"Нужно помочь им помочь с песком смешать и в бетономешалку погрузить.\n" +
-    $"Возьмёшься?\n" +
-    $"1. А чего бы и не помесить глину, да с мужиками!\n" +
-    $"2. Не, мужики, я лучше обоссаным похожу.");
+    $"Возьмёшься?\n");
+            Console.ReadKey();
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"1. А чего бы и не помесить глину, да с мужиками!\n\n" +
+    $"2. Не, мужики, я лучше обоссаным похожу.\n\n");
+            Console.ResetColor();
             dialogechoise = Console.ReadLine();
             switch (dialogechoise)
             {
@@ -337,22 +373,33 @@ namespace rpg
                     music.StartMusic("Music/gachi1.mp3");
                     Console.WriteLine("Я снял штаны.\n" +
                         "Мужики в глине были рады пополнению. \n" +
-                        "Время пролетело не заметно как вся глина была переработана в бетон\n" +
-                        "Попрощавшись с бригадой мне одобрительно кивнули.\n" +
-                        "Начальник смены сдержал своё слово и выдал мне сухой комбенезон");
+                        "Время пролетело не заметно как вся глина была переработана в бетон\n");
+                    Console.ReadKey();
+                    Console.WriteLine("Попрощавшись с бригадой мне одобрительно кивнули.\n" +
+                        "Начальник смены сдержал своё слово и выдал мне сухой комбенезон\n\n");
+                        
+                    player.clothes.Clear();
+                    player.clothes.Add(Lists.clothes[2]);
+                    Console.ReadKey();
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"На тебе надето: {player.clothes[0].Name}");
                     Console.WriteLine($"Пасхалок найдено {++easteregg}");
+                    Console.ResetColor();
                     Console.ReadKey();
                     music.StopMusic();
                     Console.WriteLine("Мне не оставалось ничего больше, кроме как двигаться дальше, \n" +
-                        "ведь у мене всё ещё нет чёткой картины того, что вчера было...");
+                        "ведь у мене всё ещё нет чёткой картины того, что вчера было...\n\n\n");
+                    Console.ReadKey();
+                    Console.Clear();
 
                     //Конец помойки----------------------------------------------
                     break;
                 case "2":
                     Console.WriteLine($"{ nps[0].name}: Вот и иди. Не смею задерживать");
                     Console.WriteLine("Мне не оставалось ничего больше, кроме как двигаться дальше, \n" +
-                        "ведь у мене всё ещё нет чёткой картины того, что вчера было...");
-                    
+                        "ведь у мене всё ещё нет чёткой картины того, что вчера было...\n\n\n");
+                    Console.ReadKey();
+                    Console.Clear();
                     break;
                     //Конец помойки----------------------------------------------
                 default:
@@ -363,25 +410,30 @@ namespace rpg
             }
             
         }
-        public void Gutter1_Maksim(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc, List<Ability> abilities)
+        public void Gutter1_Maksim(Player player, Battle battle, int easteregg, List<Nps> nps, List<Enemy> enemies, Misc misc)
         {
             Console.WriteLine("Выпив прокисшего молока я с трудом сдерживаю в себе выхлоп.\n" +
                 "Подходя к лочуге я всё больше начинал сомневался\n" +
                 "Может Дед вовсе не такой плохой?\n");
             Console.ReadKey();
-            Console.WriteLine("но было уже поздно");
+            Console.WriteLine("но было уже поздно\n");
             Console.ReadKey();
-            Console.WriteLine("Как только я подошёл к небрежно собранной из бытовой утвори домишке из неё показался он...");
-            battle.BossBattle(enemies[1], player, misc, Enemy.Resistance);
+            Console.WriteLine("Как только я подошёл к небрежно собранной из бытовой утвори домишке из неё показался он...\n\n\n");
+            battle.BossBattle(enemies[1], player, misc);
             Console.WriteLine("Обыскав лачугу деда мне удалось обнаружить:");
             player.Inventory.Add(Lists.items[0]);
             player.Inventory.Add(Lists.items[1]);
             player.Inventory.Add(Lists.items[2]);
+            player.Inventory.Add(Lists.items[8]);
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine($"{Lists.items[0].Name} x3");
-            Console.WriteLine($"Пошарив по карманам дедушки я у удивлением нашёл {Lists.questItems[1].Name}");
+            Console.WriteLine($"Пошарив по карманам дедушки я у удивлением нашёл {Lists.questItems[1].Name}, а так-же {Lists.items[8].Name}");
             player.Inventory.Add(Lists.questItems[1]);
             Console.WriteLine($"Пасхалок найдено {++easteregg}");
-            Console.WriteLine("*Что-же, видимо на помойке мне делать больше нечего. Нужно продолжать идти дальше*");
+            Console.ResetColor();
+            Console.WriteLine("*Что-же, видимо на помойке мне делать больше нечего. Нужно продолжать идти дальше*\n\n\n");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }

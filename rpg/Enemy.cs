@@ -15,7 +15,7 @@ namespace rpg
         public string battlecry;
         public string type;
         public string deathrattle;
-        
+        public List<Ability> abilities { get; set; }
         static public List<Ability> Resistance { get; set; }
         public Enemy(int id, string name, double hp, double damage, string battlecry, string deathrattle)
         {
