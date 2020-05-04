@@ -157,8 +157,8 @@ namespace rpg
             Console.WriteLine($"Без особых раздумий {enemy.name} с криком {enemy.battlecry} вступает в бой!");
             while (player.hp > 0 && enemy.hp > 0)
             {
-                //try
-                //{
+                try
+                {
                     bool SycleVar1 = true;
 
                 while (SycleVar1)
@@ -241,28 +241,28 @@ namespace rpg
                     Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine($"У тебя осталось: {player.hp} HP\n\n\n");
                             Console.ResetColor();
-                //}
-                //catch
-                //{
-                //    Console.ForegroundColor = ConsoleColor.Cyan;
-                //    Console.WriteLine("\n \n \n Тоби Ass");
-                //    Console.ResetColor();
-                //    music.StartMusic("Music/coffin.mp3");
-                //    DateTime date = new DateTime();
+                }
+                catch
+                {
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine("\n \n \n Тоби Ass");
+                    Console.ResetColor();
+                    music.StartMusic("Music/coffin.mp3");
+                    DateTime date = new DateTime();
 
-                //    date = DateTime.Now;
-                //    Console.ReadKey();
-                //    var date1 = DateTime.Now;
-                //    if (date.AddSeconds(10) < date1)
-                //    {
+                    date = DateTime.Now;
+                    Console.ReadKey();
+                    var date1 = DateTime.Now;
+                    if (date.AddSeconds(10) < date1)
+                    {
 
-                //        music.StopMusic();
-                //        misc.GameOver();
-                //        //player.hp = -22848;
+                        music.StopMusic();
+                        misc.GameOver();
+                        //player.hp = -22848;
 
-                //    }
-                //    music.StopMusic();
-                //}
+                    }
+                    music.StopMusic();
+                }
             }
 
             if (enemy.hp <= 0)
